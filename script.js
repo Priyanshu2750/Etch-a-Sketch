@@ -1,9 +1,18 @@
-function gridGeneration(container, size) {
+function rgbGenerator() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `rgb(${r},${g},${b})`;
+}
+
+function gridGeneration(container, size, cellSize) {
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
-      const div = document.createElement("div");
-      div.classList.add("cell");
-      container.appendChild(div);
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      container.appendChild(cell);
+      cell.style.width = `${cellSize}px`;
+      cell.style.height = `${cellSize}px`;
     }
   }
 }
@@ -13,7 +22,7 @@ function eventTracker() {
 
   for (let cell of cells) {
     cell.addEventListener("mouseenter", () => {
-      cell.style.backgroundColor = "black";
+      cell.style.backgroundColor = rgbGenerator();
     });
   }
 }
@@ -29,7 +38,7 @@ container.classList.add("container");
 body.appendChild(container);
 
 let size = 16;
-gridGeneration(container, size);
+gridGeneration(container, size, 960 / size);
 
 eventTracker();
 
@@ -40,6 +49,6 @@ button.addEventListener("click", () => {
     size = 16;
   }
   container.replaceChildren();
-  gridGeneration(container, size);
+  gridGeneration(container, size, 960 / size);
   eventTracker();
 });
