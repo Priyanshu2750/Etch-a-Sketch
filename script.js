@@ -2,7 +2,7 @@ function rgbGenerator() {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
   const b = Math.floor(Math.random() * 256);
-  return `rgb(${r},${g},${b})`;
+  return `${r},${g},${b}`;
 }
 
 function gridGeneration(container, size, cellSize) {
@@ -11,8 +11,12 @@ function gridGeneration(container, size, cellSize) {
       const cell = document.createElement("div");
       cell.classList.add("cell");
       container.appendChild(cell);
+
       cell.style.width = `${cellSize}px`;
       cell.style.height = `${cellSize}px`;
+
+      cell.dataset.opacity = "0";
+      cell.dataset.color = rgbGenerator();
     }
   }
 }
@@ -22,7 +26,12 @@ function eventTracker() {
 
   for (let cell of cells) {
     cell.addEventListener("mouseenter", () => {
-      cell.style.backgroundColor = rgbGenerator();
+      let opacity = parseFloat(cell.dataset.opacity);
+      if (opacity < 1) {
+        opacity += 0.1;
+        cell.dataset.opacity = opacity.toString();
+        cell.style.backgroundColor = `rgba(${cell.dataset.color},${opacity})`;
+      }
     });
   }
 }
