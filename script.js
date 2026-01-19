@@ -1,4 +1,12 @@
-const container = document.querySelector(".container");
+const body = document.querySelector("body");
+
+const button = document.createElement("button");
+body.appendChild(button);
+button.textContent = "New Grid";
+
+const container = document.createElement("div");
+container.classList.add("container");
+body.appendChild(container);
 
 for (let i = 0; i < 16; i++) {
   for (let j = 0; j < 16; j++) {
